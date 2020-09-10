@@ -46,6 +46,16 @@ export default new Vuex.Store({
     }) {
       task[key] = value
       // Vue.set(task, key, value)
+    },
+    MOVE_TASK(state, {
+      fromTasks,
+      toTasks,
+      taskIndex
+    }) {
+      // 1) Remove Task from current column
+      const taskToMove = fromTasks.splice(taskIndex, 1)[0]
+      // 2) Column we moving column to
+      toTasks.push(taskToMove)
     }
   }
 })
