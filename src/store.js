@@ -50,12 +50,25 @@ export default new Vuex.Store({
     MOVE_TASK(state, {
       fromTasks,
       toTasks,
-      taskIndex
+      fromTaskIndex,
+      toTaskIndex
     }) {
       // 1) Remove Task from current column
-      const taskToMove = fromTasks.splice(taskIndex, 1)[0]
+      const taskToMove = fromTasks.splice(fromTaskIndex, 1)[0]
       // 2) Column we moving column to
-      toTasks.push(taskToMove)
+      // Instead of push to the end we going to use splice to move it to correct position
+      // toTasks.push(taskToMove)
+      // splice(what we going to move,0 since we don't want to remove just move, where we want to move it)
+      toTasks.splice(toTaskIndex, 0, taskToMove)
+    },
+    MOVE_COLUMN(state, {
+      fromColumnIndex,
+      toColumnIndex
+    }) {
+      const columnList = state.board.columns
+      const columnToMove = columnList.splice(fromColumnIndex, 1)[0]
+      // zero since we don't want to remove we want to move element that is why we set it to 0
+      columnList.splice(toColumnIndex, 0, columnToMove)
     }
   }
 })
